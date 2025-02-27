@@ -1,6 +1,5 @@
 # import time
 from datetime import date, datetime
-
 import pandas as pd
 import psycopg2  # database connection and operation
 import requests  # for api interaction
@@ -126,10 +125,10 @@ def load_data_csv(data, fname="carbon_intensity_data") -> None:
     print(f"{re_no} records successfully saved to csv.")
 
 
-if __name__ == "__main__()":
+if __name__ == "__main__":
     BASE_URL = "https://api.carbonintensity.org.uk/regional/intensity"
-    start = date(2024, 1, 1)
-    end = date(2024, 1, 31)
+    start = date(2024, 1, 2)
+    end = date(2024, 1, 3)
 
     print("Commenced Data Extraction!")
     data = extract_data(URL=BASE_URL, start_date=start, end_date=end)
