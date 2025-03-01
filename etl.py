@@ -1,4 +1,3 @@
-# import time
 from datetime import date, datetime
 import pandas as pd
 import psycopg2  # database connection and operation
@@ -25,7 +24,7 @@ def transform_data(data) -> list:
         time = datetime.strptime(entry['from'], '%Y-%m-%dT%H:%MZ')
         date_rec = time.strftime('%Y-%m-%d')
         time_rec = time.strftime('%H:%M')
-        day = time.strftime('%A')
+        day = time.strftime('%A') # day in word like Monday....
         month = time.strftime('%B')
         for region in entry['regions']:
             dnoregion = region['dnoregion']
@@ -96,6 +95,7 @@ def load_data_db(data, conn, cur) -> None:
         solar = data_point.get('solar')
         wind = data_point.get('wind')
 
+
         # SQL query to insert data
         insert_query = """
             INSERT INTO carbon_intensity ("date", "from", day_recorded, month_recorded, 
@@ -127,8 +127,8 @@ def load_data_csv(data, fname="carbon_intensity_data") -> None:
 
 if __name__ == "__main__":
     BASE_URL = "https://api.carbonintensity.org.uk/regional/intensity"
-    start = date(2024, 1, 2)
-    end = date(2024, 1, 3)
+    start = date(2024, 1, 1)
+    end = date(2024, 1, 2)
 
     print("Commenced Data Extraction!")
     data = extract_data(URL=BASE_URL, start_date=start, end_date=end)
