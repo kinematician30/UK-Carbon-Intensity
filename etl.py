@@ -128,7 +128,7 @@ def load_data_csv(data, fname="carbon_intensity_data") -> None:
 if __name__ == "__main__":
     BASE_URL = "https://api.carbonintensity.org.uk/regional/intensity"
     start = date(2024, 1, 1)
-    end = date(2024, 1, 2)
+    end = date(2024, 1, 22)
 
     print("Commenced Data Extraction!")
     data = extract_data(URL=BASE_URL, start_date=start, end_date=end)
