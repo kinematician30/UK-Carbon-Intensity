@@ -2,4 +2,9 @@
 /u_venv
 /.idea
 /asg_eval
+/__pycache__
+/logs
 conn.yaml
+airflow.cfg
+airflow.db
+webserver_config.py
