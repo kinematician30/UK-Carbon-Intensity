@@ -1,0 +1,25 @@
+Command for Airflow setup:
+
+PYTHON ENVIROMENT SETUP IN UBUNTU
+
+sudo apt-get update
+
+sudo apt install python3.10
+
+sudo apt-get update
+
+sudo apt install python3.10-venv
+
+python3.10 -m venv u_venv
+
+source u_venv/bin/activate
+
+NOW AIRFLOW SETUP:
+
+pip install requests psycopg2-binary pandas==2.1.0 apache-airflow==2.10.0
+
+export AIRFLOW_HOME=/c/path/to/project/
+
+airflow db init
+
+airflow users create --username myuser --password mypassword --firstname My --lastname User --role Admin --email myuser@example.com
