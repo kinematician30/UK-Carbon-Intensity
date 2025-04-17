@@ -25,11 +25,10 @@ dag = DAG(
 # Define the ETL tasks
 
 def extract(**kwargs):
-    BASE_URL = "https://api.carbonintensity.org.uk/regional/intensity"
     start = date(2024, 1, 1)
-    end = date(2024, 1, 22)
+    BASE_URL = f"https://api.carbonintensity.org.uk/regional/intensity/{start_date}/pt24h"
     print("Commenced Data Extraction!")
-    data = extract_data(URL=BASE_URL, start_date=start, end_date=end)
+    data = extract_data(URL=BASE_URL)
     kwargs['ti'].xcom_push(key='extracted_data', value=data)  # Push data to XCom
     print("Ended Data Extraction!")
 
