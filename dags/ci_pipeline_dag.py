@@ -1,5 +1,5 @@
 from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
+from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 from etl import extract_data, transform_data, connectDB, load_data_db, load_data_csv
 from datetime import date
@@ -9,8 +9,8 @@ default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
     'start_date': datetime(2024, 1, 1),
-    'retries': 1,
-    'retry_delay': timedelta(minutes=5),
+    'retries': 2,
+    'retry_delay': timedelta(minutes=30),
 }
 
 # Define the DAG
@@ -18,7 +18,7 @@ dag = DAG(
     'carbon_intensity_etl',
     default_args=default_args,
     description='ETL Pipeline for Carbon Intensity Data',
-    schedule_interval='@daily',  # Run daily
+    schedule ='@daily',  # Run daily
     catchup=False,  # Disable catchup to avoid backfilling
 )
 
@@ -26,7 +26,7 @@ dag = DAG(
 
 def extract(**kwargs):
     start = date(2024, 1, 1)
-    BASE_URL = f"https://api.carbonintensity.org.uk/regional/intensity/{start_date}/pt24h"
+    BASE_URL = f"https://api.carbonintensity.org.uk/regional/intensity/{start}/pt24h"
     print("Commenced Data Extraction!")
     data = extract_data(URL=BASE_URL)
     kwargs['ti'].xcom_push(key='extracted_data', value=data)  # Push data to XCom
@@ -60,28 +60,24 @@ def load_to_csv(**kwargs):
 extract_task = PythonOperator(
     task_id='extract',
     python_callable=extract,
-    provide_context=True,
     dag=dag,
 )
 
 transform_task = PythonOperator(
     task_id='transform',
     python_callable=transform,
-    provide_context=True,
     dag=dag,
 )
 
 load_to_db_task = PythonOperator(
     task_id='load_to_db',
     python_callable=load_to_db,
-    provide_context=True,
     dag=dag,
 )
 
 load_to_csv_task = PythonOperator(
     task_id='load_to_csv',
     python_callable=load_to_csv,
-    provide_context=True,
     dag=dag,
 )
 
