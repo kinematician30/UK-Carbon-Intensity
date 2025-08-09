@@ -23,3 +23,8 @@ export AIRFLOW_HOME=/c/path/to/project/
 airflow db init
 
 airflow users create --username myuser --password mypassword --firstname My --lastname User --role Admin --email myuser@example.com
+
+airflow users list
+
+# symlink
+ln -s /c/Users/ojoay/carbon_intensity/dags ~/airflow/dags
